@@ -10,21 +10,18 @@ public class Car extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Старт! " + name);
         int ms = 0;
         for (int i = 0; i < count; i++) {
             ms = (int) (Math.random() * 100);
+            System.out.println(name + " круг = " + i + "ms = " + ms);
             time += ms;
             try {
                 Thread.sleep(ms);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            System.out.println(name + " проехал круг №" + (i + 1) + " за " + ms + " ms");
         }
-        System.out.println("Финиш! " + name);
-        System.out.println(name + " проехал весь маршрут за " + time + " ms");
+        System.out.println("time = " + time);
         Simulator.getInstance().addResult(time, name);
     }
 }

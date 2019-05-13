@@ -3,8 +3,13 @@ import java.util.TreeMap;
 
 public class Simulator {
     private static Simulator ourInstance = new Simulator();
-    static final int QUANTITY_CARS = 5;
-    static final int QUANTITY_CIRCLE = 4;
+    static final int QUANTITY_CARS = 10;
+    static final int QUANTITY_CIRCLE = 10;
+
+    public Map<Integer, String> getResult() {
+        return result;
+    }
+
     private static Map<Integer, String> result = new TreeMap<>();
 
     public static Simulator getInstance() {
@@ -15,22 +20,12 @@ public class Simulator {
     }
 
     public static void main(String[] args) {
-        // запускаем потоки
+        // запускаем потоки авто
         for (int i = 0; i < QUANTITY_CARS; i++) {
             new Car(QUANTITY_CIRCLE, "Автомобиль " + (i)).start();
         }
-        // задержка по времени
-        try {
-            Thread.sleep(QUANTITY_CIRCLE * 100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("*** Результат *** ");
-        int count = 0;
-        for (Map.Entry<Integer, String> entry : result.entrySet()) {
-            count++;
-            System.out.println(count + " Место: " + entry.getValue() + " Время: " + entry.getKey());
-        }
+        // запускаем поток аварии
+        new Accident().start();
 }
 
     public void addResult(int time, String name) {
